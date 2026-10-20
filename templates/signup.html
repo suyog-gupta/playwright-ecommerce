@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Sign up - ShopLite{% endblock %}
+{% block content %}
+<div class="auth-card"><h1>Create account</h1><form method="post">
+  <label>Name<input name="name" required autocomplete="name" data-testid="signup-name"></label>
+  <label>Email<input type="email" name="email" required autocomplete="email" data-testid="signup-email"></label>
+  <label>Password<input type="password" name="password" required minlength="6" data-testid="signup-password"></label>
+  <button type="submit" data-testid="signup-submit">Sign up</button>
+</form><p>Already registered? <a href="{{ url_for('login') }}">Log in</a></p></div>
+{% endblock %}

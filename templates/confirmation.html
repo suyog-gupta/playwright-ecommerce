@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}Order confirmed - ShopLite{% endblock %}
+{% block content %}
+<div class="confirmation" data-testid="order-confirmation"><div class="check">✓</div><h1>Payment successful</h1><p>Your order <strong data-testid="order-id">#{{ order['id'] }}</strong> has been placed.</p><p>Status: <strong data-testid="order-status">{{ order['status'] }}</strong></p><p>Total paid: <strong>₹{{ '%.2f'|format(order['total']) }}</strong></p><a class="button" href="{{ url_for('orders') }}" data-testid="view-orders">View my orders</a></div>
+{% endblock %}

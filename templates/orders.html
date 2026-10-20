@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Orders - ShopLite{% endblock %}
+{% block content %}
+<h1>Order history</h1>
+{% if orders %}<div class="orders" data-testid="orders-list">{% for order, items in orders %}<article class="order-card" data-testid="order-card"><div class="order-head"><div><h2>Order #{{ order['id'] }}</h2><small>{{ order['created_at'][:19].replace('T', ' ') }} UTC</small></div><span class="status">{{ order['status'] }}</span></div><ul>{% for item in items %}<li>{{ item['product_name'] }} × {{ item['quantity'] }} — ₹{{ '%.2f'|format(item['unit_price'] * item['quantity']) }}</li>{% endfor %}</ul><strong>Total: ₹{{ '%.2f'|format(order['total']) }}</strong></article>{% endfor %}</div>{% else %}<div class="empty" data-testid="no-orders"><h2>No orders yet</h2><a class="button" href="{{ url_for('home') }}">Start shopping</a></div>{% endif %}
+{% endblock %}

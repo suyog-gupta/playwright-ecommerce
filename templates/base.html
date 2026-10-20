@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ShopLite{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{{ url_for('home') }}" data-testid="brand">ShopLite</a>
+  <nav>
+    <a href="{{ url_for('home') }}" data-testid="nav-home">Products</a>
+    {% if user %}
+      <a href="{{ url_for('orders') }}" data-testid="nav-orders">Orders</a>
+      <span class="welcome">Hi, {{ user['name'] }}</span>
+      <form method="post" action="{{ url_for('logout') }}" class="inline"><button class="link-button" data-testid="logout">Sign out</button></form>
+    {% else %}
+      <a href="{{ url_for('login') }}" data-testid="login-link">Log in</a>
+      <a href="{{ url_for('signup') }}" data-testid="signup-link">Sign up</a>
+    {% endif %}
+    <a class="cart-link" href="{{ url_for('cart') }}" data-testid="cart-link">Cart <span class="badge" data-testid="cart-count">{{ cart_count }}</span></a>
+  </nav>
+</header>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}" role="alert" data-testid="flash">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>ShopLite • intentionally simple for UI automation practice</footer>
+</body>
+</html>

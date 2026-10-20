@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Cart - ShopLite{% endblock %}
+{% block content %}
+<h1>Your cart</h1>
+{% if items %}
+<div class="cart-layout">
+  <section>
+    {% for item in items %}
+    <article class="cart-item" data-testid="cart-item" data-product-name="{{ item['name'] }}">
+      <div><h2>{{ item['name'] }}</h2><p>₹{{ '%.2f'|format(item['price']) }} each</p></div>
+      <form method="post" action="{{ url_for('update_cart', product_id=item['id']) }}" class="qty-form">
+        <label>Qty <input type="number" name="quantity" min="1" value="{{ item['quantity'] }}" data-testid="quantity-{{ item['id'] }}"></label>
+        <button type="submit" class="secondary" data-testid="update-{{ item['id'] }}">Update</button>
+      </form>
+      <strong data-testid="line-total-{{ item['id'] }}">₹{{ '%.2f'|format(item['line_total']) }}</strong>
+      <form method="post" action="{{ url_for('remove_from_cart', product_id=item['id']) }}"><button class="danger" data-testid="remove-{{ item['id'] }}">Remove</button></form>
+    </article>
+    {% endfor %}
+  </section>
+  <aside class="summary"><h2>Order summary</h2><p>Total <strong data-testid="cart-total">₹{{ '%.2f'|format(total) }}</strong></p>{% if user %}<a class="button" href="{{ url_for('checkout') }}" data-testid="checkout-button">Proceed to checkout</a>{% else %}<a class="button" href="{{ url_for('login', next='/checkout') }}">Log in to checkout</a>{% endif %}</aside>
+</div>
+{% else %}<div class="empty" data-testid="empty-cart"><h2>Your cart is empty</h2><a class="button" href="{{ url_for('home') }}">Continue shopping</a></div>{% endif %}
+{% endblock %}

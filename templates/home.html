@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}ShopLite - Products{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><h1>Practice-friendly e-commerce</h1><p>A small store designed for Playwright UI automation.</p></div>
+</section>
+<form class="search" method="get" action="{{ url_for('home') }}">
+  <input name="q" value="{{ query }}" placeholder="Search products..." aria-label="Search products" data-testid="search-input">
+  <button type="submit" data-testid="search-button">Search</button>
+</form>
+{% if query and not products %}
+  <div class="empty" data-testid="no-results"><h2>No matches found</h2><p>We couldn't find any products matching <strong>{{ query }}</strong>.</p></div>
+{% else %}
+  <div class="grid" data-testid="product-grid">
+    {% for product in products %}
+    <article class="card" data-testid="product-card" data-product-name="{{ product['name'] }}">
+      <div class="product-image">{{ product['category'][0] }}</div>
+      <div class="card-body">
+        <span class="eyebrow">{{ product['category'] }}</span>
+        <h2><a href="{{ url_for('product_detail', product_id=product['id']) }}" data-testid="product-link-{{ product['id'] }}">{{ product['name'] }}</a></h2>
+        <p>{{ product['description'] }}</p>
+        <div class="price-row"><strong>₹{{ '%.2f'|format(product['price']) }}</strong><a class="button secondary" href="{{ url_for('product_detail', product_id=product['id']) }}">View</a></div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

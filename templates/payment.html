@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Payment - ShopLite{% endblock %}
+{% block content %}
+<div class="checkout-layout"><section><h1>Mock payment</h1><p class="notice">This is a fake payment screen. No real payment is processed.</p><form method="post">
+  <label>Card number<input inputmode="numeric" name="card" placeholder="4111 1111 1111 1111" maxlength="19" required data-testid="card-number"></label>
+  <label>Expiry<input name="expiry" placeholder="12/30" required data-testid="card-expiry"></label>
+  <label>CVV<input name="cvv" placeholder="123" maxlength="3" required data-testid="card-cvv"></label>
+  <button type="submit" data-testid="pay-button">Pay ₹{{ '%.2f'|format(total) }}</button>
+</form></section><aside class="summary"><h2>Order total</h2><p data-testid="payment-total">₹{{ '%.2f'|format(total) }}</p>{% for item in items %}<p>{{ item['name'] }} × {{ item['quantity'] }}</p>{% endfor %}</aside></div>
+{% endblock %}

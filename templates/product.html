@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ product['name'] }} - ShopLite{% endblock %}
+{% block content %}
+<div class="product-detail">
+  <div class="product-image large">{{ product['category'][0] }}</div>
+  <div>
+    <span class="eyebrow">{{ product['category'] }} · {{ product['sku'] }}</span>
+    <h1 data-testid="product-title">{{ product['name'] }}</h1>
+    <p class="description">{{ product['description'] }}</p>
+    <p class="big-price">₹{{ '%.2f'|format(product['price']) }}</p>
+    <form method="post" action="{{ url_for('add_to_cart', product_id=product['id']) }}" class="add-form">
+      <label>Quantity <input type="number" name="quantity" value="1" min="1" data-testid="product-quantity"></label>
+      <button type="submit" data-testid="add-to-cart">Add to cart</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

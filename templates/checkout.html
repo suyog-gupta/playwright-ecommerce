@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Checkout - ShopLite{% endblock %}
+{% block content %}
+<div class="checkout-layout"><section><h1>Checkout</h1><form method="post">
+  <label>Shipping address<textarea name="address" required data-testid="shipping-address">{{ session.get('checkout', {}).get('address', '') }}</textarea></label>
+  <button type="submit" data-testid="continue-payment">Continue to payment</button>
+</form></section><aside class="summary"><h2>Cart contents</h2>{% for item in items %}<p>{{ item['name'] }} × {{ item['quantity'] }} <span>₹{{ '%.2f'|format(item['line_total']) }}</span></p>{% endfor %}<hr><p>Total <strong data-testid="checkout-total">₹{{ '%.2f'|format(total) }}</strong></p></aside></div>
+{% endblock %}
